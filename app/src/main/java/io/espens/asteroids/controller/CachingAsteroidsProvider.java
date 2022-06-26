@@ -35,7 +35,7 @@ public class CachingAsteroidsProvider implements AsteroidsProvider {
      * @param start first date of interval
      * @param end last date of interval
      * @return List of asteroids
-     * @throws AsteroidsException
+     * @throws AsteroidsException if we fail to retrieve asteroid from remote
      */
     @Override
     public List<Asteroid> getAsteroids(LocalDate start, LocalDate end) throws AsteroidsException {

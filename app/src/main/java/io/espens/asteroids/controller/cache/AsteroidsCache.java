@@ -14,7 +14,7 @@ public interface AsteroidsCache {
      * @exception AsteroidsException
      * if no record is found in cache, or we fail to contact cache.
      */
-    public List<Asteroid> getAsteroids(LocalDate date) throws AsteroidsException;
+    List<Asteroid> getAsteroids(LocalDate date) throws AsteroidsException;
 
     /** Store a list of asteroids for a single day.
      * @param date the date to store
@@ -23,5 +23,5 @@ public interface AsteroidsCache {
      * @exception AsteroidsException
      * if we fail to contact cache.
      */
-    public void storeAsteroids(LocalDate date, List<Asteroid> asteroids) throws AsteroidsException;
+    void storeAsteroids(LocalDate date, List<Asteroid> asteroids) throws AsteroidsException;
 }

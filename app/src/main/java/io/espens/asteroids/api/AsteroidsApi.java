@@ -62,8 +62,7 @@ public class AsteroidsApi {
             var end = LocalDate.of(year + 1, 1, 1);
             var all = asteroidsProvider.getAsteroids(start, end);
             return all.stream()
-                    .sorted(Comparator.comparing(Asteroid::diameter).reversed())
-                    .findFirst()
+                    .max(Comparator.comparing(Asteroid::diameter))
                     .orElseThrow(() -> new AsteroidsException("No asteroids returned"));
         }
         catch(AsteroidsException e) {

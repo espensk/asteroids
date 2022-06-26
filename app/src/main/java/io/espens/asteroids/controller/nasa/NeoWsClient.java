@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -30,12 +29,12 @@ import static jakarta.ws.rs.core.Response.*;
 public class NeoWsClient implements AsteroidsProvider {
 
     private static final URI NEOWS_URL = URI.create("https://api.nasa.gov/neo/rest/v1/feed");
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final String API_KEY = Optional.ofNullable(System.getenv("API_KEY")).orElse("DEMO_KEY");
 
     private final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final Client client;
 
+    @SuppressWarnings("unused")
     public NeoWsClient() {
         this(ClientBuilder.newClient());
     }
@@ -76,13 +75,13 @@ public class NeoWsClient implements AsteroidsProvider {
 
     }
     private Asteroid map(NearEarthObject neo) {
+        //picking the closest fly-by
         return new Asteroid(neo.id(),
                 neo.name(),
                 neo.estimated_diameter().meters().estimated_diameter_max(),
                 neo.close_approach_data().stream()
                         .map(d -> d.miss_distance().kilometers())
-                        .sorted(BigDecimal::compareTo)   //picking the closest fly-by
-                        .findFirst()
+                        .min(BigDecimal::compareTo)
                         .get(),
                 neo.nasa_jpl_url());
     }

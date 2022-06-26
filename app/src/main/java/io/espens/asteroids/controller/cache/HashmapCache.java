@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class HashmapCache implements AsteroidsCache {
 
-    private HashMap<LocalDate, List<Asteroid>> cache = new HashMap<>();
+    private final HashMap<LocalDate, List<Asteroid>> cache = new HashMap<>();
 
     @Override
     public List<Asteroid> getAsteroids(LocalDate date) throws AsteroidsException {
@@ -25,7 +25,7 @@ public class HashmapCache implements AsteroidsCache {
     }
 
     @Override
-    public void storeAsteroids(LocalDate date, List<Asteroid> asteroids) throws AsteroidsException {
+    public void storeAsteroids(LocalDate date, List<Asteroid> asteroids) {
         cache.put(date, asteroids);
     }
 }

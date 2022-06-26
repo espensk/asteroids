@@ -15,14 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.apache.commons.io.IOUtils;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -72,15 +70,5 @@ public class NeoWsClientTest {
                 LocalDate.parse("2015-09-08"));
         assertThat(asteroids).isNotNull();
         assertThat(asteroids.size()).isEqualTo(25);
-    }
-
-    // utility: load a resource file as string
-    private static String loadFile(String filename) {
-        try (var inputStream = NeoWsClientTest.class.getResourceAsStream(filename)) {
-            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        }
-        catch (IOException uh) {
-            throw new IllegalArgumentException("Failed to load " + filename, uh);
-        }
     }
 }
