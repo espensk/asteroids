@@ -1,4 +1,4 @@
-package io.espens.spond.asteroids.controller;
+package io.espens.asteroids.controller;
 
 public class AsteroidsException extends Exception {
     public AsteroidsException(String msg) {

@@ -1,9 +1,10 @@
-package io.espens.spond.asteroids.api;
+package io.espens.asteroids.api;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsException;
-import io.espens.spond.asteroids.controller.AsteroidsProvider;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.AsteroidsException;
+import io.espens.asteroids.controller.AsteroidsProvider;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -24,7 +25,7 @@ public class AsteroidsApi {
     private final AsteroidsProvider asteroidsProvider;
 
     @Inject
-    public AsteroidsApi(AsteroidsProvider provider) {
+    public AsteroidsApi(@Named("caching") AsteroidsProvider provider) {
         this.asteroidsProvider = provider;
     }
 

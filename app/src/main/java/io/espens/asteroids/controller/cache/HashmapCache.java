@@ -1,7 +1,7 @@
-package io.espens.spond.asteroids.controller.cache;
+package io.espens.asteroids.controller.cache;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsException;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.AsteroidsException;
 
 import java.time.LocalDate;
 import java.util.HashMap;

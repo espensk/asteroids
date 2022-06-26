@@ -1,7 +1,7 @@
-package io.espens.spond.asteroids.api;
+package io.espens.asteroids.api;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsProvider;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.AsteroidsProvider;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
@@ -24,7 +24,7 @@ public class AsteroidsApiJerseyTest extends JerseyTest {
                 .register(new AbstractBinder() {
                     @Override
                     protected void configure() {
-                        bind(DummyAsteroidProvider.class).to(AsteroidsProvider.class);
+                        bind(DummyAsteroidProvider.class).to(AsteroidsProvider.class).named("caching");
                     }
                 });
     }

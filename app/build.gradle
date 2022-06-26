@@ -69,5 +69,5 @@ testing {
 
 application {
     // Define the main class for the application.
-    mainClass = 'io.espens.spond.asteroids.App'
+    mainClass = 'io.espens.asteroids.App'
 }

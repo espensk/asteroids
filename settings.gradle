@@ -8,5 +8,5 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
-rootProject.name = 'spond-asteroids'
+rootProject.name = 'asteroids'
 include('app')

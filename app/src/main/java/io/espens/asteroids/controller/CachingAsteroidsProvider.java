@@ -1,8 +1,9 @@
-package io.espens.spond.asteroids.controller;
+package io.espens.asteroids.controller;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.cache.AsteroidsCache;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.cache.AsteroidsCache;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class CachingAsteroidsProvider implements AsteroidsProvider {
     private final AsteroidsCache cache;
 
     @Inject
-    public CachingAsteroidsProvider(AsteroidsProvider remoteProvider,
+    public CachingAsteroidsProvider(@Named("remote") AsteroidsProvider remoteProvider,
                                     AsteroidsCache cache) {
         this.remoteProvider = remoteProvider;
         this.cache = cache;

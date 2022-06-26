@@ -1,9 +1,9 @@
-package io.espens.spond.asteroids.controller.nasa;
+package io.espens.asteroids.controller.nasa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsException;
-import io.espens.spond.asteroids.controller.nasa.model.NeowsResponse;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.AsteroidsException;
+import io.espens.asteroids.controller.nasa.model.NeowsResponse;
 import jakarta.ws.rs.client.Client;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.ws.rs.client.Invocation;

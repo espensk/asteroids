@@ -1,9 +1,9 @@
-package io.espens.spond.asteroids.controller;
+package io.espens.asteroids.controller;
 
 
-import io.espens.spond.asteroids.controller.cache.HashmapCache;
-import io.espens.spond.asteroids.controller.nasa.NeoWsClient;
-import io.espens.spond.asteroids.controller.nasa.NeoWsClientTest;
+import io.espens.asteroids.controller.cache.HashmapCache;
+import io.espens.asteroids.controller.nasa.NeoWsClient;
+import io.espens.asteroids.controller.nasa.NeoWsClientTest;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;

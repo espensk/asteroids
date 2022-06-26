@@ -1,4 +1,4 @@
-package io.espens.spond.asteroids.controller.nasa.model;
+package io.espens.asteroids.controller.nasa.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

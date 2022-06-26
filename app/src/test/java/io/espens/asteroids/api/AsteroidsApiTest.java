@@ -1,8 +1,8 @@
-package io.espens.spond.asteroids.api;
+package io.espens.asteroids.api;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.nasa.NeoWsClient;
-import io.espens.spond.asteroids.controller.nasa.NeoWsClientTest;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.nasa.NeoWsClient;
+import io.espens.asteroids.controller.nasa.NeoWsClientTest;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
@@ -16,10 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.InputStream;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

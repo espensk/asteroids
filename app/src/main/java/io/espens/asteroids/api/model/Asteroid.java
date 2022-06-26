@@ -1,4 +1,4 @@
-package io.espens.spond.asteroids.api.model;
+package io.espens.asteroids.api.model;
 
 import java.math.BigDecimal;
 import java.net.URL;

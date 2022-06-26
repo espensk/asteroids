@@ -1,8 +1,8 @@
-package io.espens.spond.asteroids.api;
+package io.espens.asteroids.api;
 
-import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsException;
-import io.espens.spond.asteroids.controller.AsteroidsProvider;
+import io.espens.asteroids.api.model.Asteroid;
+import io.espens.asteroids.controller.AsteroidsProvider;
+import io.espens.asteroids.controller.AsteroidsException;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
