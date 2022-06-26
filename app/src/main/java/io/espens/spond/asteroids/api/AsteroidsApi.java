@@ -1,6 +1,7 @@
 package io.espens.spond.asteroids.api;
 
 import io.espens.spond.asteroids.api.model.Asteroid;
+import io.espens.spond.asteroids.controller.AsteroidsException;
 import io.espens.spond.asteroids.controller.AsteroidsProvider;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -9,15 +10,9 @@ import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +20,6 @@ import java.util.stream.Collectors;
 public class AsteroidsApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(AsteroidsApi.class);
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     private final AsteroidsProvider asteroidsProvider;
 
@@ -50,7 +44,7 @@ public class AsteroidsApi {
                     .collect(Collectors.toList());
         } catch (DateTimeParseException e) {
             throw new BadRequestException("Failed to parse start or end dates", e);
-        } catch (AsteroidsProvider.AsteroidsException e) {
+        } catch (AsteroidsException e) {
             LOG.warn("Failed to get asteroids: {}", e.getMessage());
             throw new InternalServerErrorException("Failed to retrieve asteroids from remove", e);
         }
@@ -69,9 +63,9 @@ public class AsteroidsApi {
             return all.stream()
                     .sorted(Comparator.comparing(Asteroid::diameter).reversed())
                     .findFirst()
-                    .orElseThrow(() -> new AsteroidsProvider.AsteroidsException("No asteroids returned"));
+                    .orElseThrow(() -> new AsteroidsException("No asteroids returned"));
         }
-        catch(AsteroidsProvider.AsteroidsException e) {
+        catch(AsteroidsException e) {
             LOG.warn("Failed to get asteroids: {}", e.getMessage());
             throw new WebApplicationException("Failed to get asteroids", Response.Status.INTERNAL_SERVER_ERROR);
         }

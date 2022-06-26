@@ -15,12 +15,13 @@ Defining two APIs for the two tasks:
 
 GET asteroids/close
 params: start_date
-        end_date
-        limit (default 10)
-Return a json list of asteroids
+        end_date limit (default 10)
+
+Return a json list of asteroids (simplifying the datastructure from NASA)
    id
    name
    diameter (use max, in meters)
+   distance (min, in kilometers)
    link
 
 GET asteroids/biggest
@@ -28,19 +29,22 @@ params: year
 end_date
 limit (default 10)
 
-Return a json object
-  id
-  name
-  diameter (use max, in meters)
-  link
-
+We can return an Asteroid object same as above.
 
 ## Cache database design
+NASA APIs' query limit is spanning 7 days. So our task to calculate the biggest asteroid passing in a year needs over 50 repeated queries.
+Caching will definitely speed this up if we do repeated queries over the same intervals.
 As we receive json data from nasa, with slightly complex structures of lists of objects, I'd recommend a json or text store over a SQL database. 
-With the requested features, persistence is not very important, as the truth set comes directly from nasa itself and is not modified by our app.
-(In fact, caching isn't very important here at all, and introduce more complexity than benefit imho:) 
-For other applications, we'd possibly modify or amend the data itself, where persistence would become important.
+MongoDB is a clear candidate if parameters are to be indexed/searched, but also memcached/redis can serve our purpose (text key/value stores, the latter with persistence).
 
+NASA returns asteroid data to us as a map of date -> list of asteroids.
+As maximum searches are 7 days, I've designed the queriying to be one per day. It is not a huge performance loss (1/7) compared to querying a week at a time,
+and this avoids complex evaluation of cache presence over partially overlapping queries.
+(we will have to check the cache for every day within the query regardless, as that's the smallest unit of query)
+
+With the requested features, persistence is not very important, as the truth set comes directly from nasa itself and is not modified by our app.
+If the database is restared frequently this could change though, but that's not often seen.
+For other applications or features, we'd possibly need to modify or amend the data itself, where persistence would become important.
 
 ## Implementation
 Decided to use grizzly/jersey as web framework as it's widely used and not overly bloated.

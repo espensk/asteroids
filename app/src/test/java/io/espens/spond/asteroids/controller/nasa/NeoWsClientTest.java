@@ -2,7 +2,7 @@ package io.espens.spond.asteroids.controller.nasa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.espens.spond.asteroids.api.model.Asteroid;
-import io.espens.spond.asteroids.controller.AsteroidsProvider;
+import io.espens.spond.asteroids.controller.AsteroidsException;
 import io.espens.spond.asteroids.controller.nasa.model.NeowsResponse;
 import jakarta.ws.rs.client.Client;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -66,7 +66,7 @@ public class NeoWsClientTest {
     }
 
     @Test
-    public void testDemoResponse() throws AsteroidsProvider.AsteroidsException {
+    public void testDemoResponse() throws AsteroidsException {
         List<Asteroid> asteroids = neoWsClient.getAsteroids(
                 LocalDate.parse("2015-09-07"),
                 LocalDate.parse("2015-09-08"));

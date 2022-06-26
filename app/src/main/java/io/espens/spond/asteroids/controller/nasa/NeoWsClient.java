@@ -2,8 +2,8 @@ package io.espens.spond.asteroids.controller.nasa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.espens.spond.asteroids.api.model.Asteroid;
+import io.espens.spond.asteroids.controller.AsteroidsException;
 import io.espens.spond.asteroids.controller.AsteroidsProvider;
-import io.espens.spond.asteroids.controller.nasa.model.CloseApproachData;
 import io.espens.spond.asteroids.controller.nasa.model.NearEarthObject;
 import io.espens.spond.asteroids.controller.nasa.model.NeowsResponse;
 import jakarta.ws.rs.ProcessingException;
@@ -81,7 +81,7 @@ public class NeoWsClient implements AsteroidsProvider {
                 neo.estimated_diameter().meters().estimated_diameter_max(),
                 neo.close_approach_data().stream()
                         .map(d -> d.miss_distance().kilometers())
-                        .sorted(BigDecimal::compareTo)
+                        .sorted(BigDecimal::compareTo)   //picking the closest fly-by
                         .findFirst()
                         .get(),
                 neo.nasa_jpl_url());
