@@ -25,6 +25,8 @@ ext {
     slf4jVersion = "1.7.33"
     logbackVersion = "1.2.11"
     assertJVersion = "3.23.1"
+    mockitoVersion = "4.6.1"
+    commonsIoVersion = "2.11.0"
 }
 
 dependencies {
@@ -38,6 +40,7 @@ dependencies {
     implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version: "$jerseyVersion"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "$jacksonVersion"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jacksonVersion"
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "$jacksonVersion"
     implementation group: 'jakarta.inject', name: 'jakarta.inject-api', version: "$jakartaInjectVersion"
     implementation group: 'org.glassfish.hk2', name: 'hk2', version: "$hk2Version"
     implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: "$jerseyVersion"
@@ -46,6 +49,10 @@ dependencies {
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: "$assertJVersion"
     testImplementation group: 'org.glassfish.jersey.test-framework', name: 'jersey-test-framework-core', version: "$jerseyVersion"
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: "$mockitoVersion"
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: "$mockitoVersion"
+    testImplementation group: 'commons-io', name: 'commons-io', version: "$commonsIoVersion"
+
     testRuntimeOnly group: 'org.glassfish.jersey.test-framework.providers',
             name: 'jersey-test-framework-provider-grizzly2', version: "$jerseyVersion"
 }

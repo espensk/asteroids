@@ -1,7 +1,8 @@
 package io.espens.spond.asteroids.api;
 
-import io.espens.spond.asteroids.App;
 import io.espens.spond.asteroids.api.model.Asteroid;
+import io.espens.spond.asteroids.controller.AsteroidsProvider;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -11,11 +12,14 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/asteroids")
 public class AsteroidsApi {
@@ -23,21 +27,32 @@ public class AsteroidsApi {
     private static final Logger LOG = LoggerFactory.getLogger(AsteroidsApi.class);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
+    private final AsteroidsProvider asteroidsProvider;
+
+    @Inject
+    public AsteroidsApi(AsteroidsProvider provider) {
+        this.asteroidsProvider = provider;
+    }
+
     @GET
     @Path("close")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Asteroid> close(@QueryParam("start_date") String start,
                                 @QueryParam("end_date") String end,
                                 @QueryParam("limit") @DefaultValue("10") int limit) {
-        Date startDate = null;
         try {
-            startDate = DATE_FORMAT.parse(start);
-            Date endDate = DATE_FORMAT.parse(end);
-
-            LOG.info("Querying {} asteroids between {} and {}", limit, startDate, endDate);
-            return List.of(getBiggest(2021));
-        } catch (ParseException e) {
-            throw new BadRequestException("Failed to parse input date");
+            LocalDate startDate = LocalDate.parse(start);
+            LocalDate endDate = LocalDate.parse(end);
+            return asteroidsProvider.getAsteroids(startDate, endDate)
+                    .stream()
+                    .sorted(Comparator.comparing(Asteroid::distance))
+                    .limit(limit)
+                    .collect(Collectors.toList());
+        } catch (DateTimeParseException e) {
+            throw new BadRequestException("Failed to parse start or end dates", e);
+        } catch (AsteroidsProvider.AsteroidsException e) {
+            LOG.warn("Failed to get asteroids: {}", e.getMessage());
+            throw new InternalServerErrorException("Failed to retrieve asteroids from remove", e);
         }
     }
 
@@ -48,13 +63,17 @@ public class AsteroidsApi {
     public Asteroid getBiggest(@QueryParam("year") Integer year) {
         LOG.info("Get the biggest asteroid passing earth in year {}", year);
         try {
-            return new Asteroid("dummy",
-                    "espens-asterodi",
-                    new BigDecimal("32.312312"),
-                    new URL("https://nasa.gov/jepsen"));
+            var start = LocalDate.of(year, 1,1);
+            var end = LocalDate.of(year + 1, 1, 1);
+            var all = asteroidsProvider.getAsteroids(start, end);
+            return all.stream()
+                    .sorted(Comparator.comparing(Asteroid::diameter).reversed())
+                    .findFirst()
+                    .orElseThrow(() -> new AsteroidsProvider.AsteroidsException("No asteroids returned"));
         }
-        catch (MalformedURLException e) {
-            throw new WebApplicationException("Poorly configured url", Response.Status.INTERNAL_SERVER_ERROR);
+        catch(AsteroidsProvider.AsteroidsException e) {
+            LOG.warn("Failed to get asteroids: {}", e.getMessage());
+            throw new WebApplicationException("Failed to get asteroids", Response.Status.INTERNAL_SERVER_ERROR);
         }
     }
 

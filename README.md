@@ -55,4 +55,5 @@ Even simpler using kubernetes and a helm chart pointing to the image.
 ## Further improvements
 - A lot. 
 - Logging to stdout now as it's simple. However as we use the logging facade slf4j it's simple to wire in more comprehensive logging later.
-- 
+- Dates. It's weird that the NASA APIs present dates without timezone. It should be. 
+  I have for now ignored timezone in the app, but in real world this must be accounted for.
