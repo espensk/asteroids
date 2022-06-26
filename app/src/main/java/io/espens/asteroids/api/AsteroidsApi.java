@@ -59,7 +59,7 @@ public class AsteroidsApi {
         LOG.info("Get the biggest asteroid passing earth in year {}", year);
         try {
             var start = LocalDate.of(year, 1,1);
-            var end = LocalDate.of(year + 1, 1, 1);
+            var end = LocalDate.of(year, 12, 31);
             var all = asteroidsProvider.getAsteroids(start, end);
             return all.stream()
                     .max(Comparator.comparing(Asteroid::diameter))
