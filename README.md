@@ -10,6 +10,13 @@ Using Java, implement a RESTful API service to answer such queries. The service 
 > Note: The cache requirement seems overkill, though it can be needed in similar applications.
   The complexity in this task relies in the cache storage; we'd like to reuse the cache storage across queries, possibly adjacent or overlapping. How can we retrieve range data from earlier partially overlapping queries?
 
+## Running
+Requirements:
+- gradle 7.4
+- java 17
+To run: 
+`./gradlew build run`
+
 ## API
 Defining two APIs for the two tasks:
 
