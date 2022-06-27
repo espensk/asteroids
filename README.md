@@ -55,7 +55,7 @@ Logging using slf4j to stdout.
 
 ## Use docker?
 Docker is great, but it doesn't really help other developers to get started. 
-It does rather add another level of complexity to get to run it.
+Rather it adds another level of complexity to get to run it.
 Docker helps a lot to deploy and run the software though, as an image can be published in a registry and easily installed and run on a docker runtime on a lot of computers.
 Even simpler using kubernetes and a helm chart pointing to the image.
 
@@ -64,9 +64,13 @@ Even simpler using kubernetes and a helm chart pointing to the image.
 - Add a real database, I'd go with memcached as it's simple. Until a real persistence requirement come.
 - Fork queries to NASA in parallel, using client's rx() api and CompletableFutures.  
   It causes some more complexity so I thought I'd test it with synchronous requests first, but never got time to paralellize it.
-- Possibly add a more intelligent cache presence check so that we can query 7 days at NASA, cutting # requests by 1/7.
+- Possibly add a more intelligent cache presence check so that we can query 7 days at NASA, cutting # requests by 7.
 - Add Dockerfile to bundle this as an image and publish it
-- Add a k8s cluster with database (memcached?) 
+- Add a k8s cluster with database (memcached?) included through the helm chart
+- The biggest and closest algorithm could be made more lean (require less memory) by letting them provide a filter/collector
+  all the way to the Provider, letting only the 1 largest or 10 closest asteroids need to be stored while we iterate the list.
+  Unlike today where we get the whole list and then filter. It's not a huge problem with max 356*~15 asteroids, 
+  but for huge datasets this is an issue. 
 - For now we're logging to stdout as it's simple. However as we use the logging facade slf4j it's simple to wire in more comprehensive logging later. 
 - Dates. It's weird that the NASA APIs present dates without timezone? 
   I have for now ignored timezone in the app by using localtime, but in real world this must be accounted for.
