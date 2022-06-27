@@ -3,9 +3,6 @@
  */
 package io.espens.asteroids;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.slf4j.LoggerFactory;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
@@ -16,9 +13,8 @@ public class App {
 
     public static void main(String[] args) throws URISyntaxException {
         System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
-        ServiceLocator locator = ServiceLocatorUtilities.createAndPopulateServiceLocator();
         URI listeningUri = new URI("http://localhost:8000");
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
+        GrizzlyHttpServerFactory.createHttpServer(
                 listeningUri,
                 new AsteroidsJerseyApplication(),
                 true);
